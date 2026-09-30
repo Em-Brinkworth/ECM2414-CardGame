@@ -1,6 +1,8 @@
 public class CardGame extends Thread{
 
     void main() {
+
+
         // TODO
         // n threads
         // Each in a while loop
