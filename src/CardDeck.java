@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CardDeck {
-    ArrayList<Card> deck;
+    ArrayList<Card> deck = new ArrayList<>();
 
     public CardDeck (Card[] initDeck) {
-        deck.addAll(Arrays.asList(initDeck));
+        Arrays.asList(initDeck).addAll(deck);
     }
 
     public Card draw() {
