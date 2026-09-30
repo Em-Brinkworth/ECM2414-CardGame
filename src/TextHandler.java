@@ -1,8 +1,5 @@
 public class TextHandler {
-    static void write(String text) {
-        // TODO: IMPLEMENT
-    }
-    static void delete(String fn) {
+    static synchronized void write(String text, String fn) {
         // TODO: IMPLEMENT
     }
 }

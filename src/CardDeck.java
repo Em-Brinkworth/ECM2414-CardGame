@@ -10,12 +10,12 @@ public class CardDeck {
         this.deckName = "deck " + deckName;
     }
 
-    public Card draw() {
-        // Returns the top card of the deck and removes add
+    public synchronized Card draw() {
+        // Returns the top card of the deck and removes it
         return deck.removeLast();
     }
 
-    public void discardToDeck(Card card) {
+    public synchronized void discardToDeck(Card card) {
         // Adds a card to the bottom of the deck
         deck.addFirst(card);
     }
