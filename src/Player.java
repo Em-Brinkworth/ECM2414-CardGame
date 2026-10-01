@@ -14,22 +14,16 @@ public class Player {
         fn = fninit;
         TextHandler.write(playerName + " initial hand " + hand.toString(), fn);
         RelativePosition = PositionInitialiser;
-
-
-
-
-
     }
 
     public boolean CheckIfWon() {
         //Checks if all cards in hand are same value, by checking if any differ from the first card.
-        boolean hasWon = true;
         for (Card i : hand){
             if(i.getValue()!=hand.get(0).getValue()){
-                hasWon = false;
+                return false;
             }
         }
-        return hasWon;
+        return true;
     }
 
     public void draw(CardDeck deck) {
