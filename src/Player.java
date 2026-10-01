@@ -8,6 +8,10 @@ public class Player {
     private final String fn;
     private final int id;
 
+    public int getId() {
+        return id;
+    }
+
     public Player(Card[] initHand, int id, String fninit) {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
