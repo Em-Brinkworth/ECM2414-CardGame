@@ -47,10 +47,10 @@ public class CardGame extends Thread{
             // Check if someone else won
             if (!winFlags.isEmpty()) {
                 for (Integer i: winFlags) {
-                    TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFn());
+                    TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFp());
                 }
-                TextHandler.write(player.getName() + " has left.", player.getFn());
-                TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFn());
+                TextHandler.write(player.getName() + " has left.", player.getFp());
+                TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFp());
                 return;
             }
             // Pick up a card

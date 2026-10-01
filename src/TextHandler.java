@@ -6,23 +6,24 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextHandler {
-    static synchronized void write(String text, String fn) {
-        try (FileWriter fw = new FileWriter(fn, true)) {
-            fw.write("\n" + text);
-        } catch (IOException e) {
-            System.out.println("Failed to write '" + text + "'");
-        }
-    }
-    static int[] read(String fn) {
+    static int[] read(String fp) {
         ArrayList<Integer> deckList = new ArrayList<>();
-        File deckFile = new File(fn);
+        File deckFile = new File(fp);
         try (Scanner deckScanner = new Scanner(deckFile)) {
             while (deckScanner.hasNextLine()) {
                 deckList.add(Integer.valueOf(deckScanner.nextLine()));
             }
         } catch (FileNotFoundException | NumberFormatException e) {
-            System.out.println("Failed to read " + fn);
+            System.out.println("Failed to read " + fp);
         }
         return deckList.stream().mapToInt(i -> i).toArray();
+    }
+
+    static synchronized void write(String text, String fp) {
+        try (FileWriter fw = new FileWriter(fp, true)) {
+            fw.write("\n" + text);
+        } catch (IOException e) {
+            System.out.println("Failed to write '" + text + "'");
+        }
     }
 }

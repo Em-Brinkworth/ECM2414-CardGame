@@ -38,13 +38,13 @@ Holds a hand and provides methods for editing said hand.
 
 `private ArrayList<Card> hand` is where the player's hand is stored.  
 `private final String playerName` is the name of the player, stored as "player" + the player ID.  
-`fp` is the path of the file where the player info is stored.  
+`private final String fn` is the name of the file where the player info is stored.  
 
 ### Constructor
-`public Player(Card[] initHand, int id, Path fpinit)`  
+`public Player(Card[] initHand, int id, String fninit)`  
 `Card[] initHand` is the starting player hand.  
 `int id` is the ID of the player.  
-`Path fpinit` is the path to the file which holds the player info.  
+`String fninit` is the path to the file which holds the player info.  
 The function assigns the variables to appropriate internal variables and writes the starting hand to the player's file.  
 
 ### Draw
@@ -89,3 +89,21 @@ Is synchronised to avoid thread collisions
 `Card card` the card being discarded to the deck.  
 Adds the specified card to the bottom of the deck.  
 Is synchronised to avoid thread collisions.  
+
+## Text Handler
+
+Deals with I/O operations to and from the files in the Decks and Games directory.  
+
+### Read
+
+`static int[] read(String fp)`  
+`String fp` is the filepath of the file being read from.  
+Reads the file at `fp` and returns an `int[]` containing the deck located in that file.  
+
+### Write
+
+`static synchronized void write(String text, String fp)`    
+`String text` is the text to be written to the file.  
+`String fp` is the filepath of the file being written to.  
+Writes the message `text` to the file at location `fp`.  
+Is thread-safe to prevent collisions from multiple players trying to access the same file.  
