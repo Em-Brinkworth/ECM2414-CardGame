@@ -25,10 +25,10 @@ public class Player {
         return hand;
     }
 
-    public Player(Card[] initHand, int id, Path fninit) {
+    public Player(Card[] initHand, int id, Path fpinit) {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
-        fp = fninit;
+        fp = fpinit;
         TextHandler.write(playerName + " initial hand " + hand.toString(), fp);
         this.id = id;
     }

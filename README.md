@@ -4,6 +4,18 @@
 
 ## Card Game
 
+### Internal Variables
+
+`ArrayList<Integer> winFlags = new ArrayList<>();` stores the id of any players who have won.  
+`ArrayList<CardDeck> deckList;` Stores the deck of cards being used to play the game with.  s
+
+### Main
+
+`void main()`  
+Takes the user input for the number of players and filename of the pack used.  
+The number of players is validated to check if it is a) an integer and b) above 0, and the user is prompted until they enter something valid.  
+The filepath is checked for if it exists and if it contains 8n results, where n is the number of players, the contents of the file are then stored to `deckList`.  
+
 ## Card
 
 Stores the value of a card and provides a setter for it.
@@ -26,12 +38,13 @@ Holds a hand and provides methods for editing said hand.
 
 `private ArrayList<Card> hand` is where the player's hand is stored.  
 `private final String playerName` is the name of the player, stored as "player" + the player ID.  
-`fn` is the name of the file where the player info is stored.  
+`fp` is the path of the file where the player info is stored.  
 
 ### Constructor
-`public Player(Card[] initHand, String name)`  
+`public Player(Card[] initHand, int id, Path fpinit)`  
 `Card[] initHand` is the starting player hand.  
-`String name` is the ID of the player.  
+`int id` is the ID of the player.  
+`Path fpinit` is the path to the file which holds the player info.  
 The function assigns the variables to appropriate internal variables and writes the starting hand to the player's file.  
 
 ### Draw
