@@ -6,14 +6,14 @@ public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private final String playerName;
     private final String fn;
-    private final int RelativePosition;
+    private final int id;
 
-    public Player(Card[] initHand, String name, String fninit, int PositionInitialiser) {
+    public Player(Card[] initHand, int id, String fninit) {
         hand.addAll(Arrays.asList(initHand));
-        playerName = "player " + name;
+        playerName = "player " + id;
         fn = fninit;
         TextHandler.write(playerName + " initial hand " + hand.toString(), fn);
-        RelativePosition = PositionInitialiser;
+        this.id = id;
     }
 
     public boolean checkIfWon() {
@@ -35,7 +35,7 @@ public class Player {
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
         ArrayList<Integer> positionsofdiscardablecards = new ArrayList<>();
         for(int i =0; i<hand.size();i++ ) {
-            if(hand.get(i).getValue()!=RelativePosition){
+            if(hand.get(i).getValue()!= id){
                 positionsofdiscardablecards.add(i);
             }
         }
