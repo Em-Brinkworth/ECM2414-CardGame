@@ -16,6 +16,15 @@ Takes the user input for the number of players and filename of the pack used.
 The number of players is validated to check if it is a) an integer and b) above 0, and the user is prompted until they enter something valid.  
 The filepath is checked for if it exists and if it contains 8n results, where n is the number of players, the contents of the file are then stored to `deckList`.  
 
+### Run
+
+`public void run(Player player)`  
+`Player player` is the player the thread is being created for.  
+Defines the behaviour of a player in a thread.  
+Starts by checking if the player has won, and if so, sets it as a flag in `winFlags`, then checks if a player has won, then draws and discards a card.  
+This is repeated until a player has won.  
+If a player has won, outputs the relevant text to the relevant player file, then stops the thread.
+
 ## Card
 
 Stores the value of a card and provides a setter for it.
