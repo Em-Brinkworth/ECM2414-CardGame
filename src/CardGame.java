@@ -22,7 +22,7 @@ public class CardGame extends Thread{
                 break;
             } catch (NumberFormatException | RangeException e) {
                 System.out.println("That's not a valid integer. Please try again ");
-            };
+            }
         }
         // Input file
         int[] packContents;
@@ -38,7 +38,7 @@ public class CardGame extends Thread{
                 System.out.println("That's not a valid file in the decks folder. Please enter another filename");
             } catch (RangeException e) {
                 System.out.print("File length is incorrect");
-            };
+            }
         }
         // Create n threads
     }
