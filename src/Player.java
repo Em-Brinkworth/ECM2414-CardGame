@@ -1,3 +1,4 @@
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -5,7 +6,7 @@ import java.util.Random;
 public class Player {
     private ArrayList<Card> hand = new ArrayList<>();
     private final String playerName;
-    private final String fn;
+    private final Path fp;
     private final int id;
 
     public int getId() {
@@ -16,19 +17,19 @@ public class Player {
         return playerName;
     }
 
-    public String getFn() {
-        return fn;
+    public Path getFp() {
+        return fp;
     }
 
     public ArrayList<Card> getHand() {
         return hand;
     }
 
-    public Player(Card[] initHand, int id, String fninit) {
+    public Player(Card[] initHand, int id, Path fninit) {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
-        fn = fninit;
-        TextHandler.write(playerName + " initial hand " + hand.toString(), fn);
+        fp = fninit;
+        TextHandler.write(playerName + " initial hand " + hand.toString(), fp);
         this.id = id;
     }
 
@@ -45,7 +46,7 @@ public class Player {
     public void draw(CardDeck deck) {
         Card cardDrawn = deck.draw();
         hand.add(cardDrawn);
-        TextHandler.write(playerName + " draws a " + cardDrawn.getValue() + " from " + deck.getDeckName(), fn);
+        TextHandler.write(playerName + " draws a " + cardDrawn.getValue() + " from " + deck.getDeckName(), fp);
     }
 
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
@@ -61,7 +62,6 @@ public class Player {
         //we use an arraylist for the positions of discardable cards as there may be any number of cards one can discard
         deck.discardToDeck(card);
         hand.remove(card);
-        TextHandler.write(playerName + " discards a " + card.getValue() + " to " + deck.getDeckName(), fn);
+        TextHandler.write(playerName + " discards a " + card.getValue() + " to " + deck.getDeckName(), fp);
     }
-
 }
