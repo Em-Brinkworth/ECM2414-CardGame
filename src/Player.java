@@ -12,6 +12,18 @@ public class Player {
         return id;
     }
 
+    public String getName() {
+        return playerName;
+    }
+
+    public String getFn() {
+        return fn;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
     public Player(Card[] initHand, int id, String fninit) {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
@@ -38,7 +50,7 @@ public class Player {
 
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
         ArrayList<Integer> positionsofdiscardablecards = new ArrayList<>();
-        for(int i =0; i<hand.size();i++ ) {
+        for(int i = 0; i<hand.size();i++ ) {
             if(hand.get(i).getValue()!= id){
                 positionsofdiscardablecards.add(i);
             }
