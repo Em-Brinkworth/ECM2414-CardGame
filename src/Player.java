@@ -16,7 +16,7 @@ public class Player {
         RelativePosition = PositionInitialiser;
     }
 
-    public boolean CheckIfWon() {
+    public boolean checkIfWon() {
         //Checks if all cards in hand are same value, by checking if any differ from the first card.
         for (Card i : hand){
             if(i.getValue()!=hand.get(0).getValue()){
@@ -33,7 +33,7 @@ public class Player {
     }
 
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
-        ArrayList<Integer> positionsofdiscardablecards = new ArrayList<Integer>();
+        ArrayList<Integer> positionsofdiscardablecards = new ArrayList<>();
         for(int i =0; i<hand.size();i++ ) {
             if(hand.get(i).getValue()!=RelativePosition){
                 positionsofdiscardablecards.add(i);
