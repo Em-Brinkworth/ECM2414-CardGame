@@ -1,7 +1,5 @@
 import org.w3c.dom.ranges.RangeException;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,12 +28,10 @@ public class CardGame extends Thread{
             System.out.println("Enter the filename of the pack you want to use.");
             String fnString = inputScanner.nextLine();
             try{
-                Path filepath = Paths.get("../Decks/" + fnString);
+                String filepath = "../Decks/" + fnString;
                 packContents = TextHandler.read(filepath);
                 if (packContents.length != playerCount*8) throw new RangeException((short) 1, "File length is incorrect");
                 break;
-            }catch(FileNotFoundException e){
-                System.out.println("That's not a valid file in the decks folder. Please enter another filename");
             } catch (RangeException e) {
                 System.out.print("File length is incorrect");
             }
@@ -52,10 +48,10 @@ public class CardGame extends Thread{
             // Check if someone else won
             if (!winFlags.isEmpty()) {
                 for (Integer i: winFlags) {
-                    TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFp());
+                    TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFn());
                 }
-                TextHandler.write(player.getName() + " has left.", player.getFp());
-                TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFp());
+                TextHandler.write(player.getName() + " has left.", player.getFn());
+                TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFn());
                 return;
             }
             // Pick up a card
