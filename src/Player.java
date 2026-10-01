@@ -1,4 +1,3 @@
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -29,14 +28,14 @@ public class Player {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
         fn = fpinit;
-        TextHandler.write(playerName + " initial hand " + hand.toString(), fn);
+        TextHandler.write(playerName + " initial hand " + hand, fn);
         this.id = id;
     }
 
     public boolean checkIfWon() {
         //Checks if all cards in hand are same value, by checking if any differ from the first card.
         for (Card i : hand){
-            if(i.getValue()!=hand.get(0).getValue()){
+            if(i.getValue()!=hand.getFirst().getValue()){
                 return false;
             }
         }
