@@ -4,10 +4,12 @@
 
 ## Card Game
 
+The main function from which the program is run
+
 ### Internal Variables
 
 `ArrayList<Integer> winFlags = new ArrayList<>();` stores the id of any players who have won.  
-`ArrayList<CardDeck> deckList;` Stores the deck of cards being used to play the game with.  s
+`ArrayList<CardDeck> decksList;` Stores the deck of cards being used to play the game with.  
 
 ### Main
 
@@ -16,14 +18,26 @@ Takes the user input for the number of players and filename of the pack used.
 The number of players is validated to check if it is a) an integer and b) above 0, and the user is prompted until they enter something valid.  
 The filepath is checked for if it exists and if it contains 8n results, where n is the number of players, the contents of the file are then stored to `deckList`.  
 
-### Run
+The decks are then created and stored in `decksList`, with the cards being dealt in a round-robin fashion.  
+Then the players are created, assigned their initial hands in a round-robin fashion, and their threads are started.  
 
-`public void run(Player player)`  
-`Player player` is the player the thread is being created for.  
-Defines the behaviour of a player in a thread.  
-Starts by checking if the player has won, and if so, sets it as a flag in `winFlags`, then checks if a player has won, then draws and discards a card.  
-This is repeated until a player has won.  
-If a player has won, outputs the relevant text to the relevant player file, then stops the thread.
+### Player Behaviour
+
+Extends `Thread`  
+Stores the behaviour of a player's thread, so that multiple player instances can be created.  
+
+#### Internal Variables
+
+`private final Player player` stores the player the thread is representing.  
+
+#### Run
+
+`public void run()`
+Defines the behaviour of a player in its thread.  
+First checks if it has won, and if so sets itself as a winner in `winFlags`.  
+Then checks if another player has won, if so, the thread writes the relevant output lines, then terminates.  
+It then takes a turn, drawing a card then discarding a card.  
+A card is not discarded if a player failed to draw a card.  
 
 ## Card
 
@@ -48,28 +62,41 @@ Holds a hand and provides methods for editing said hand.
 `private ArrayList<Card> hand` is where the player's hand is stored.  
 `private final String playerName` is the name of the player, stored as "player" + the player ID.  
 `private final String fn` is the name of the file where the player info is stored.  
+`private final int id` is the player's id.  
 
 ### Constructor
-`public Player(Card[] initHand, int id, String fninit)`  
+`public Player(Card[] initHand, int id, String fpinit)`  
 `Card[] initHand` is the starting player hand.  
 `int id` is the ID of the player.  
-`String fninit` is the path to the file which holds the player info.  
+`String fpinit` is the path to the file which holds the player info.  
 The function assigns the variables to appropriate internal variables and writes the starting hand to the player's file.  
 
 ### Draw
 
-`public void draw(CardDeck deck)`  
+`public boolean draw(CardDeck deck)`  
 `CardDeck deck` is the deck the player is drawing from.  
-The function removes the top element of the 'deck' (The last element of the array) and returns the `Card` removed.  
+The function removes the top element of the 'deck' (The last element of the array) and returns true.  
 It then writes the drawn card to the player's file.   
+If there is no deck to draw from the function instead writes this to the output file and returns false.  
+
+### Get Card to Discard
+
+`private Card getCardToDiscard()`  
+Returns a random card to discard not matching the player's id.  
+If all cards match then a random card is returned.  
 
 ### Discard
 
-`public void discard(CardDeck deck, Card card)`  
-`CardDeck deck` is the deck the player is discarding to.  
-`Card card` is the card being discarded.  
-Removes `card` from the players hand and adds it to the 'bottom' (0th index) of the deck specified.  
-It then writes the discarded card to the player's file.  
+`public void discard(CardDeck deck)`  
+`CardDeck deck` is the deck the player is discarding to.
+Finds the card the player is to discard with `getCardToDiscard` and then removes that card from the hand, and discards it to `deck` using `discardToDeck`.  
+The card discarded is then written to the player file.  
+
+### Get Hand as String
+
+`public String getHandAsString()`  
+
+Returns a string in the format `"n1 n2 n3 ..."` where `nx` is the xth card in a player's hand.  
 
 ## Card Deck
 
@@ -84,7 +111,7 @@ Stores the deck list and contains methods to draw from the top and discard to th
 
 `public CardDeck (Card[] initDeck, String deckName)`
 `Card[] initDeck` defines the initial starting deck.  
-`String deckName` contains the deck ID.  
+`int deckName` contains the deck ID.  
 
 ### Draw
 
@@ -105,9 +132,11 @@ Deals with I/O operations to and from the files in the Decks and Games directory
 
 ### Read
 
-`static int[] read(String fp)`  
+`static int[] read(String fp, int playerCount) throws RangeException`  
 `String fp` is the filepath of the file being read from.  
+`int playerCount` is the number of players in the game.  
 Reads the file at `fp` and returns an `int[]` containing the deck located in that file.  
+Throws a range exception is the `int[]` that would be returned does not have length 8*`playerCount` exactly.  
 
 ### Write
 
@@ -115,4 +144,9 @@ Reads the file at `fp` and returns an `int[]` containing the deck located in tha
 `String text` is the text to be written to the file.  
 `String fp` is the filepath of the file being written to.  
 Writes the message `text` to the file at location `fp`.  
-Is thread-safe to prevent collisions from multiple players trying to access the same file.  
+Is synchronized to prevent collisions from multiple players trying to access the same file.  
+
+### Delete
+`static void delete(int playerCount)`  
+`int playerCount` is the number of players in the game.  
+Deletes the first n player logs, where n is the `playerCount`.  
