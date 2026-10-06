@@ -6,7 +6,6 @@ public class CardGame extends Thread{
     volatile ArrayList<Integer> winFlags = new ArrayList<>();
     ArrayList<CardDeck> decksList;
     void main() {
-        // TODO
         // Input Players
         int playerCount;
         Scanner inputScanner = new Scanner(System.in);
@@ -37,42 +36,61 @@ public class CardGame extends Thread{
         }
         // Deal initial hands and decklists
         // Create Decks
-        for (int i = 1; i <= playerCount; i++) {
+        for (int i = 0; i < playerCount; i++) {
             decksList.add(new CardDeck(new Card[]{
                     new Card(packContents[playerCount * 4 + i]),
-                    new Card(packContents[playerCount * 8 + i]),
-                    new Card(packContents[playerCount * 12 + i]),
-                    new Card(packContents[playerCount * 16 + i])
-            }, "" + i
+                    new Card(packContents[playerCount * 5 + i]),
+                    new Card(packContents[playerCount * 6 + i]),
+                    new Card(packContents[playerCount * 7 + i])
+            }, "" + i + 1
             ));
         }
+        // TODO
         // Create players and initialise threads
-        // Create n threads
+        for (int i = 0; i < playerCount; i++) {
+            new PlayerBehaviour(new Player(
+                    new Card[]{
+                            new Card(packContents[i]),
+                            new Card(packContents[playerCount * 1 + i]),
+                            new Card(packContents[playerCount * 2 + i]),
+                            new Card(packContents[playerCount * 3 + i]),
+                    },
+                    i+1,
+                    "../Games/Player" + (i + 1) + ".txt"
+            )).start();
+        }
     }
+    public class PlayerBehaviour extends Thread {
+        private final Player player;
 
-    public void run(Player player) {
-        while (true) {
-            // Check if won
-            if (player.checkIfWon()) {
-                winFlags.add(player.getId());
-            }
-            // Check if someone else won
-            if (!winFlags.isEmpty()) {
-                for (Integer i: winFlags) {
-                    if (i!= player.getId()) {
-                        TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFp());
-                    } else {
-                        TextHandler.write("player " + i + " has won.", player.getFp());
-                    }
+        public PlayerBehaviour(Player player) {
+            this.player = player;
+        }
+
+        public void run() {
+            while (true) {
+                // Check if won
+                if (player.checkIfWon()) {
+                    winFlags.add(player.getId());
                 }
-                TextHandler.write(player.getName() + " has left.", player.getFp());
-                TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFp());
-                return;
+                // Check if someone else won
+                if (!winFlags.isEmpty()) {
+                    for (Integer i : winFlags) {
+                        if (i != player.getId()) {
+                            TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFp());
+                        } else {
+                            TextHandler.write("player " + i + " has won.", player.getFp());
+                        }
+                    }
+                    TextHandler.write(player.getName() + " has left.", player.getFp());
+                    TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFp());
+                    return;
+                }
+                // Pick up a card
+                player.draw(decksList.get(player.getId() - 1));
+                // Discard a card
+                player.discard(decksList.get(player.getId()));
             }
-            // Pick up a card
-            player.draw(decksList.get(player.getId() - 1));
-            // Discard a card
-            player.discard(decksList.get(player.getId()));
         }
     }
 }
