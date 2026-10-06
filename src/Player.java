@@ -1,5 +1,8 @@
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 public class Player {
@@ -43,9 +46,13 @@ public class Player {
     }
 
     public void draw(CardDeck deck) {
-        Card cardDrawn = deck.draw();
-        hand.add(cardDrawn);
-        TextHandler.write(playerName + " draws a " + cardDrawn.getValue() + " from " + deck.getDeckName(), fp);
+        try {
+            Card cardDrawn = deck.draw();
+            hand.add(cardDrawn);
+            TextHandler.write(playerName + " draws a " + cardDrawn.getValue() + " from " + deck.getDeckName(), fp);
+        } catch (NoSuchElementException e) {
+            TextHandler.write(playerName + " fails to draw a card.", fp);
+        }
     }
 
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
