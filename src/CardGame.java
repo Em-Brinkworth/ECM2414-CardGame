@@ -8,9 +8,9 @@ import java.util.Scanner;
 public class CardGame extends Thread{
     volatile ArrayList<Integer> winFlags = new ArrayList<>();
     ArrayList<CardDeck> decksList = new ArrayList<>();
+    int playerCount;
     void main() {
         // Input Players
-        int playerCount;
         Scanner inputScanner = new Scanner(System.in);
         while (true) {
             System.out.println("Please enter a number of players.");
@@ -92,7 +92,11 @@ public class CardGame extends Thread{
                 // Pick up a card
                 player.draw(decksList.get(player.getId() - 1));
                 // Discard a card
-                player.discard(decksList.get(player.getId()));
+                if (player.getId() != playerCount) {
+                    player.discard(decksList.get(player.getId()));
+                } else {
+                    player.discard(decksList.getFirst());
+                }
             }
         }
     }
