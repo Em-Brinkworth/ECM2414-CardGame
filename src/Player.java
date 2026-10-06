@@ -62,15 +62,20 @@ public class Player {
     }
 
     public void discard(CardDeck deck) { //removed card input as card to be discarded is determined here
-        ArrayList<Integer> positionsofdiscardablecards = new ArrayList<>();
+        ArrayList<Integer> positionsOfDiscardableCards = new ArrayList<>();
+        Card card;
         for(int i = 0; i<hand.size();i++ ) {
             if(hand.get(i).getValue()!= id){
-                positionsofdiscardablecards.add(i);
+                positionsOfDiscardableCards.add(i);
             }
         }
         Random randomiser = new Random();
-        Card card = hand.get(positionsofdiscardablecards.get(randomiser.nextInt(positionsofdiscardablecards.size()-1)));
-        //gets the value of a random position in positionsofdiscardablecards and picks that card in the hand to discard.
+        try {
+            card = hand.get(positionsOfDiscardableCards.get(randomiser.nextInt(positionsOfDiscardableCards.size() - 1)));
+        } catch (IllegalArgumentException e) {
+            card = hand.get(randomiser.nextInt(hand.size()-1));
+        }
+        //gets the value of a random position in positionsOfDiscardableCards and picks that card in the hand to discard.
         //we use an arraylist for the positions of discardable cards as there may be any number of cards one can discard
         deck.discardToDeck(card);
         hand.remove(card);
