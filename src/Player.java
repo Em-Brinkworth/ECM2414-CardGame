@@ -24,7 +24,7 @@ public class Player {
     public String getHandAsString() {
         StringBuilder handAsString = new StringBuilder();
         for (Card card: hand) {
-            handAsString.append(card).append(" ");
+            handAsString.append(card.getValue()).append(" ");
         }
         return handAsString.toString();
     }

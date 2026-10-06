@@ -80,7 +80,7 @@ public class CardGame extends Thread{
                 if (!winFlags.isEmpty()) {
                     for (Integer i : winFlags) {
                         if (i != player.getId()) {
-                            TextHandler.write("player " + i + " has informed " + player.getName() + "that player " + i + " has won.", player.getFp());
+                            TextHandler.write("player " + i + " has informed " + player.getName() + " that player " + i + " has won.", player.getFp());
                         } else {
                             TextHandler.write("player " + i + " has won.", player.getFp());
                         }
