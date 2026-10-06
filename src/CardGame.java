@@ -1,5 +1,7 @@
 import org.w3c.dom.ranges.RangeException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class CardGame extends Thread{
@@ -26,12 +28,12 @@ public class CardGame extends Thread{
             System.out.println("Enter the filename of the pack you want to use.");
             String fnString = inputScanner.nextLine();
             try{
-                String filepath = "../Decks/" + fnString;
-                packContents = TextHandler.read(filepath);
-                if (packContents.length != playerCount*8) throw new RangeException((short) 1, "File length is incorrect");
-                break;
+                packContents = TextHandler.read("../Decks/" + fnString, playerCount);
+                if (!Arrays.equals(packContents, new int[]{})) {
+                    break;
+                }
             } catch (RangeException e) {
-                System.out.print("File length is incorrect");
+                System.out.print("File length is incorrect\n");
             }
         }
         // Deal initial hands and decklists
@@ -51,7 +53,7 @@ public class CardGame extends Thread{
             new PlayerBehaviour(new Player(
                     new Card[]{
                             new Card(packContents[i]),
-                            new Card(packContents[playerCount * 1 + i]),
+                            new Card(packContents[playerCount + i]),
                             new Card(packContents[playerCount * 2 + i]),
                             new Card(packContents[playerCount * 3 + i]),
                     },
