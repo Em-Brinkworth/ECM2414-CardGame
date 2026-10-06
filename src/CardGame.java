@@ -3,8 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CardGame extends Thread{
-    ArrayList<Integer> winFlags = new ArrayList<>();
-    ArrayList<CardDeck> deckList;
+    volatile ArrayList<Integer> winFlags = new ArrayList<>();
+    ArrayList<CardDeck> decksList;
     void main() {
         // TODO
         // Input Players
@@ -35,6 +35,18 @@ public class CardGame extends Thread{
                 System.out.print("File length is incorrect");
             }
         }
+        // Deal initial hands and decklists
+        // Create Decks
+        for (int i = 1; i <= playerCount; i++) {
+            decksList.add(new CardDeck(new Card[]{
+                    new Card(packContents[playerCount * 4 + i]),
+                    new Card(packContents[playerCount * 8 + i]),
+                    new Card(packContents[playerCount * 12 + i]),
+                    new Card(packContents[playerCount * 16 + i])
+            }, "" + i
+            ));
+        }
+        // Create players and initialise threads
         // Create n threads
     }
 
@@ -58,9 +70,9 @@ public class CardGame extends Thread{
                 return;
             }
             // Pick up a card
-            player.draw(deckList.get(player.getId() - 1));
+            player.draw(decksList.get(player.getId() - 1));
             // Discard a card
-            player.discard(deckList.get(player.getId()));
+            player.discard(decksList.get(player.getId()));
         }
     }
 }
