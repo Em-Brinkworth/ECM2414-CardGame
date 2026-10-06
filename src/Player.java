@@ -51,13 +51,15 @@ public class Player {
         return true;
     }
 
-    public void draw(CardDeck deck) {
+    public boolean draw(CardDeck deck) {
         try {
             Card cardDrawn = deck.draw();
             hand.add(cardDrawn);
             TextHandler.write(playerName + " draws a " + cardDrawn.getValue() + " from " + deck.getDeckName(), fp);
+            return true;
         } catch (NoSuchElementException e) {
             TextHandler.write(playerName + " fails to draw a card.", fp);
+            return false;
         }
     }
 

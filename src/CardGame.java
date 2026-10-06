@@ -46,7 +46,7 @@ public class CardGame extends Thread{
                     new Card(packContents[playerCount * 5 + i]),
                     new Card(packContents[playerCount * 6 + i]),
                     new Card(packContents[playerCount * 7 + i])
-            }, "" + i + 1
+            }, i + 1
             ));
         }
         // Create players and initialise threads
@@ -90,12 +90,13 @@ public class CardGame extends Thread{
                     return;
                 }
                 // Pick up a card
-                player.draw(decksList.get(player.getId() - 1));
-                // Discard a card
-                if (player.getId() != playerCount) {
-                    player.discard(decksList.get(player.getId()));
-                } else {
-                    player.discard(decksList.getFirst());
+                if (player.draw(decksList.get(player.getId() - 1))) {
+                    // Discard a card
+                    if (player.getId() != playerCount) {
+                        player.discard(decksList.get(player.getId()));
+                    } else {
+                        player.discard(decksList.getFirst());
+                    }
                 }
             }
         }

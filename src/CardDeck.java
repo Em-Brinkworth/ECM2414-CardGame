@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CardDeck {
     private ArrayList<Card> deck = new ArrayList<>();
     private final String deckName;
 
-    public CardDeck (Card[] initDeck, String deckName) {
-        Arrays.asList(initDeck).addAll(deck);
+    public CardDeck (Card[] initDeck, int deckName) {
+        deck.addAll(List.of(initDeck));
         this.deckName = "deck " + deckName;
     }
 
