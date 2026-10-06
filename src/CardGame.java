@@ -86,7 +86,7 @@ public class CardGame extends Thread{
                         }
                     }
                     TextHandler.write(player.getName() + " has left.", player.getFp());
-                    TextHandler.write(player.getName() + " final hand " + player.getHand().toString(), player.getFp());
+                    TextHandler.write(player.getName() + " final hand " + player.getHandAsString(), player.getFp());
                     return;
                 }
                 // Pick up a card

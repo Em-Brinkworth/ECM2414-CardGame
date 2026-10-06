@@ -21,6 +21,14 @@ public class Player {
         return fp;
     }
 
+    public String getHandAsString() {
+        StringBuilder handAsString = new StringBuilder();
+        for (Card card: hand) {
+            handAsString.append(card).append(" ");
+        }
+        return handAsString.toString();
+    }
+
     public ArrayList<Card> getHand() {
         return hand;
     }
@@ -29,7 +37,7 @@ public class Player {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
         fp = fpinit;
-        TextHandler.write(playerName + " initial hand " + hand, fp);
+        TextHandler.write(playerName + " initial hand " + getHandAsString(), fp);
         this.id = id;
     }
 
