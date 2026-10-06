@@ -34,7 +34,7 @@ public class TextHandler {
 
     static void delete(int playerCount) {
         for (int i =1; i <= playerCount; i++) {
-            File f = new File("Games/player" + i);
+            File f = new File("Games/player" + i + ".txt");
             f.delete();
         }
 
