@@ -15,7 +15,7 @@ public class TextHandler {
             while (deckScanner.hasNextLine()) {
                 deckList.add(Integer.valueOf(deckScanner.nextLine()));
             }
-            if (deckList.size() != playerCount) {
+            if (deckList.size() != playerCount*8) {
                 throw new RangeException((short) 1, "File is wrong size.");
             }
         } catch (FileNotFoundException | NumberFormatException e) {
@@ -30,5 +30,13 @@ public class TextHandler {
         } catch (IOException e) {
             System.out.println("Failed to write '" + text + "'");
         }
+    }
+
+    static void delete(int playerCount) {
+        for (int i =1; i <= playerCount; i++) {
+            File f = new File("Games/player" + i);
+            f.delete();
+        }
+
     }
 }

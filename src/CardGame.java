@@ -1,12 +1,13 @@
 import org.w3c.dom.ranges.RangeException;
+
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class CardGame extends Thread{
     volatile ArrayList<Integer> winFlags = new ArrayList<>();
-    ArrayList<CardDeck> decksList;
+    ArrayList<CardDeck> decksList = new ArrayList<>();
     void main() {
         // Input Players
         int playerCount;
@@ -22,13 +23,14 @@ public class CardGame extends Thread{
                 System.out.println("That's not a valid integer. Please try again ");
             }
         }
+        TextHandler.delete(playerCount);
         // Input file
         int[] packContents;
         while(true){
             System.out.println("Enter the filename of the pack you want to use.");
             String fnString = inputScanner.nextLine();
             try{
-                packContents = TextHandler.read("../Decks/" + fnString, playerCount);
+                packContents = TextHandler.read("Decks/" + fnString, playerCount);
                 if (!Arrays.equals(packContents, new int[]{})) {
                     break;
                 }
@@ -47,7 +49,6 @@ public class CardGame extends Thread{
             }, "" + i + 1
             ));
         }
-        // TODO
         // Create players and initialise threads
         for (int i = 0; i < playerCount; i++) {
             new PlayerBehaviour(new Player(
@@ -58,7 +59,7 @@ public class CardGame extends Thread{
                             new Card(packContents[playerCount * 3 + i]),
                     },
                     i+1,
-                    "../Games/Player" + (i + 1) + ".txt"
+                    "Games/player" + (i + 1) + ".txt"
             )).start();
         }
     }
