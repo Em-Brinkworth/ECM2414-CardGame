@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 
 public class CardGame extends Thread{
-    volatile ArrayList<Integer> winFlags = new ArrayList<>();
+    volatile int winFlag = 0;
     volatile ArrayList<CardDeck> decksList = new ArrayList<>();
     CountDownLatch waitForAllPlayersToFinaliseWinner;
     int playerCount;
@@ -75,20 +75,18 @@ public class CardGame extends Thread{
             while (true) {
                 // Check if won
                 if (player.checkIfWon()) {
-                    winFlags.add(player.getId());
+                    winFlag = player.getId();
                 }
                 // Check if someone else won
-                if (!winFlags.isEmpty()) {
+                if (winFlag != 0) {
                     waitForAllPlayersToFinaliseWinner.countDown();
                     try {
                         waitForAllPlayersToFinaliseWinner.await();
-                        for (Integer i : winFlags) {
-                            if (i != player.getId()) {
-                                TextHandler.write("player " + i + " has informed " + player.getName() + " that player " + i + " has won.", player.getFp());
+                            if (winFlag != player.getId()) {
+                                TextHandler.write("player " + winFlag + " has informed " + player.getName() + " that player " + winFlag + " has won.", player.getFp());
                             } else {
-                                TextHandler.write("player " + i + " has won.", player.getFp());
+                                TextHandler.write("player " + winFlag + " has won.", player.getFp());
                             }
-                        }
                         TextHandler.write(player.getName() + " has left.", player.getFp());
                         TextHandler.write(player.getName() + " final hand " + player.getHandAsString(), player.getFp());
                         return;
