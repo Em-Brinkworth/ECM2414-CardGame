@@ -23,4 +23,11 @@ public class CardDeck {
     public String getDeckName() {
         return deckName;
     }
+    public String getDeckAsString() {
+        StringBuilder deckAsString = new StringBuilder();
+        for (Card card: deck) {
+            deckAsString.append(card.getValue()).append(" ");
+        }
+        return deckAsString.toString();
+    }
 }
