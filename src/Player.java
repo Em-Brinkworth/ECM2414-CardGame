@@ -33,10 +33,10 @@ public class Player {
         return hand;
     }
 
-    public Player(Card[] initHand, int id, String fpinit) {
+    public Player(Card[] initHand, int id) {
         hand.addAll(Arrays.asList(initHand));
         playerName = "player " + id;
-        fp = fpinit;
+        fp = "Games/player" + id + ".txt";
         TextHandler.write(playerName + " initial hand " + getHandAsString(), fp);
         this.id = id;
     }

@@ -59,8 +59,7 @@ public class CardGame extends Thread{
                             new Card(packContents[playerCount * 2 + i]),
                             new Card(packContents[playerCount * 3 + i]),
                     },
-                    i+1,
-                    "Games/player" + (i + 1) + ".txt"
+                    i+1
             )).start();
         }
     }
