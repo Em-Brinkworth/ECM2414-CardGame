@@ -26,16 +26,18 @@ public class TextHandler {
 
     static synchronized void write(String text, String fp) {
         try (FileWriter fw = new FileWriter(fp, true)) {
-            fw.write("\n" + text);
+            fw.write( text + "\n");
         } catch (IOException e) {
             System.out.println("Failed to write '" + text + "'");
         }
     }
 
     static void delete(int playerCount) {
+        // Deletes all players up to the player count
         for (int i =1; i <= playerCount; i++) {
-            File f = new File("Games/player" + i + ".txt");
-            f.delete();
+            File p = new File("Games/player" + i + ".txt");
+            File d = new File("Games/Deck" + i + "_output.txt");
+            p.delete(); d.delete();
         }
     }
 }
