@@ -8,8 +8,9 @@ The main function from which the program is run
 
 ### Internal Variables
 
-`ArrayList<Integer> winFlags = new ArrayList<>();` stores the id of any players who have won.  
+`int winFlag = 0` stores the id of the player who has won. If no player has won stores 0.  
 `ArrayList<CardDeck> decksList;` Stores the deck of cards being used to play the game with.  
+`CountDownLatch waitForAllPlayersToFinaliseWinner;` Stores a `CountDownLatch` with input equal to the player count. Used to cause all players to output the winner concurrently to stop discrepancies.  
 
 ### Main
 
@@ -65,11 +66,10 @@ Holds a hand and provides methods for editing said hand.
 `private final int id` is the player's id.  
 
 ### Constructor
-`public Player(Card[] initHand, int id, String fpinit)`  
+`public Player(Card[] initHand, int id)`  
 `Card[] initHand` is the starting player hand.  
-`int id` is the ID of the player.  
-`String fpinit` is the path to the file which holds the player info.  
-The function assigns the variables to appropriate internal variables and writes the starting hand to the player's file.  
+`int id` is the ID of the player.
+The function assigns the variables to appropriate internal variables and writes the starting hand to the player's file. It also assigns the filepath based on the player's ID.  
 
 ### Draw
 
@@ -144,7 +144,7 @@ Throws a range exception is the `int[]` that would be returned does not have len
 `String text` is the text to be written to the file.  
 `String fp` is the filepath of the file being written to.  
 Writes the message `text` to the file at location `fp`.  
-Is synchronized to prevent collisions from multiple players trying to access the same file.  
+Is `synchronized` to prevent collisions from multiple players trying to access the same file.  
 
 ### Delete
 `static void delete(int playerCount)`  
