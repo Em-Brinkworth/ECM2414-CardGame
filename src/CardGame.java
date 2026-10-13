@@ -2,10 +2,12 @@ import org.w3c.dom.ranges.RangeException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
 
 public class CardGame extends Thread{
     volatile ArrayList<Integer> winFlags = new ArrayList<>();
-    ArrayList<CardDeck> decksList = new ArrayList<>();
+    volatile ArrayList<CardDeck> decksList = new ArrayList<>();
+    CountDownLatch waitForAllPlayersToFinaliseWinner;
     int playerCount;
     void main() {
         // Input Players
@@ -47,7 +49,8 @@ public class CardGame extends Thread{
             }, i + 1
             ));
         }
-        // Create players and initialise threads
+        // Create players and initialise threads (and initialise CountDownLatch)
+        waitForAllPlayersToFinaliseWinner = new CountDownLatch(playerCount);
         for (int i = 0; i < playerCount; i++) {
             new PlayerBehaviour(new Player(
                     new Card[]{
@@ -76,16 +79,22 @@ public class CardGame extends Thread{
                 }
                 // Check if someone else won
                 if (!winFlags.isEmpty()) {
-                    for (Integer i : winFlags) {
-                        if (i != player.getId()) {
-                            TextHandler.write("player " + i + " has informed " + player.getName() + " that player " + i + " has won.", player.getFp());
-                        } else {
-                            TextHandler.write("player " + i + " has won.", player.getFp());
+                    waitForAllPlayersToFinaliseWinner.countDown();
+                    try {
+                        waitForAllPlayersToFinaliseWinner.await();
+                        for (Integer i : winFlags) {
+                            if (i != player.getId()) {
+                                TextHandler.write("player " + i + " has informed " + player.getName() + " that player " + i + " has won.", player.getFp());
+                            } else {
+                                TextHandler.write("player " + i + " has won.", player.getFp());
+                            }
                         }
+                        TextHandler.write(player.getName() + " has left.", player.getFp());
+                        TextHandler.write(player.getName() + " final hand " + player.getHandAsString(), player.getFp());
+                        return;
+                    } catch (InterruptedException e) {
+                        return;
                     }
-                    TextHandler.write(player.getName() + " has left.", player.getFp());
-                    TextHandler.write(player.getName() + " final hand " + player.getHandAsString(), player.getFp());
-                    return;
                 }
                 // Pick up a card
                 if (player.draw(decksList.get(player.getId() - 1))) {

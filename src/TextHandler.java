@@ -37,6 +37,5 @@ public class TextHandler {
             File f = new File("Games/player" + i + ".txt");
             f.delete();
         }
-
     }
 }
