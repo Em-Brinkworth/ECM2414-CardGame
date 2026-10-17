@@ -13,7 +13,7 @@ public class TextHandler {
         File deckFile = new File(fp);
         try (Scanner deckScanner = new Scanner(deckFile)) {
             while (deckScanner.hasNextLine()) {
-                deckList.add(Integer.valueOf(deckScanner.nextLine()));
+                deckList.add(Integer.parseInt(deckScanner.nextLine()));
             }
             if (deckList.size() != playerCount*8) {
                 throw new RangeException((short) 1, "File is wrong size.");
