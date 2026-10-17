@@ -18,10 +18,14 @@ public class TextHandler {
             if (deckList.size() != playerCount*8) {
                 throw new RangeException((short) 1, "File is wrong size.");
             }
-        } catch (FileNotFoundException | NumberFormatException e) {
-            System.out.println("Failed to read " + fp);
+            return deckList.stream().mapToInt(i -> i).toArray();
+        } catch (FileNotFoundException e) {
+            System.out.println(fp + " does not exist.");
+            return new int[]{};
+        } catch (NumberFormatException e) {
+            System.out.println(fp + " had invalid formatting.");
+            return new int[]{};
         }
-        return deckList.stream().mapToInt(i -> i).toArray();
     }
 
     static synchronized void write(String text, String fp) {
