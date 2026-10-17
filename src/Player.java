@@ -72,7 +72,7 @@ public class Player {
         TextHandler.write(playerName + " discards a " + card.getValue() + " to " + deck.getDeckName(), fp);
     }
 
-    private Card getCardToDiscard() {
+    public Card getCardToDiscard() {
         ArrayList<Integer> positionsOfDiscardableCards = new ArrayList<>();
         Card card;
         for(int i = 0; i<hand.size();i++ ) {
