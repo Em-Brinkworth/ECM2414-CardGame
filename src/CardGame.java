@@ -116,10 +116,7 @@ public class CardGame extends Thread{
                 TextHandler.write(player.getName() + " final hand " + player.getHandAsString(), player.getFp());
 
                 TextHandler.write("Deck " + player.getId() + " final contents is " + decksList.get(player.getId()-1).getDeckAsString(), "Games/Deck" + player.getId() + "_output.txt");
-                return;
-            } catch (InterruptedException e) {
-                return;
-            }
+            } catch (InterruptedException _) {}
         }
         protected synchronized void drawDiscard() {
             // Pick up a card

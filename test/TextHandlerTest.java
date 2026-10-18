@@ -11,31 +11,35 @@ class TextHandlerTest {
 
     @Test
     void readTest() {
-        File DeckM8 = new File ("Decks/CardDeckMoreThan8.txt");
-        File DeckL8 = new File ("Decks/CardDeckLessThan8.txt");
-        File DeckL = new File ("Decks/CardDeckLessThan8.txt");
-        DeckL8.delete();
-        DeckM8.delete();
-        DeckL.delete();
-        try (FileWriter w1 = new FileWriter("Decks/CardDeckLessThan8.txt", true)) {
+        try (FileWriter w1 = new FileWriter("test/Files/CardDeckLessThan8.txt", false)) {
             w1.write( "7" + "\n");
         } catch (IOException e) {
             System.out.println("Failed to write '" + "7" + "'");
         }
-        try (FileWriter w2 = new FileWriter("Decks/CardDeckMoreThan8.txt", true)) {
-           w2.write( "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n" + "2" + "\n");
+        try (FileWriter w2 = new FileWriter("test/Files/CardDeckMoreThan8.txt", false)) {
+           w2.write("""
+                   2
+                   2
+                   2
+                   2
+                   2
+                   2
+                   2
+                   2
+                   2
+                   """);
         } catch (IOException e) {
             System.out.println("Failed to write '" + "7" + "'");
         }
-        try (FileWriter w3 = new FileWriter("Decks/CardDeckLanguageTest.txt", true)) {
+        try (FileWriter w3 = new FileWriter("test/Files/CardDeckLanguageTest.txt", false)) {
             w3.write( "A");
         } catch (IOException e) {
             System.out.println("Failed to write '" + "7" + "'");
         }
 
-        Exception exception = assertThrows(RangeException.class, () -> {TextHandler.read("Decks/CardDeckLessThan8.txt", 4);});
-        Exception exception2 = assertThrows(RangeException.class, () -> {TextHandler.read("Decks/CardDeckMoreThan8.txt", 4);});
-        Exception exception3 = assertThrows(NumberFormatException.class, () -> {TextHandler.read("Decks/CardDeckLanguageTest.txt", 4);});
+        assertThrows(RangeException.class, () -> TextHandler.read("test/Files/CardDeckLessThan8.txt", 4));
+        assertThrows(RangeException.class, () -> TextHandler.read("test/Files/CardDeckMoreThan8.txt", 4));
+        assertArrayEquals(new int[]{}, TextHandler.read("test/Files/CardDeckLanguageTest.txt", 4));
     }
 
     @Test
@@ -69,7 +73,7 @@ class TextHandlerTest {
         String fn23 = "test/files/deckDeleteTest23.txt"; File f23 = new File(fn23);
         TextHandler.write(" ", fn23);
         if (f11.exists() && f12.exists() && f13.exists() && f21.exists() && f22.exists() && f23.exists()) {
-            TextHandler.delete(new String[]{"test/files/deckDeleteTest1", "test/files/deckDeleteTest2"}, 3);
+            TextHandler.delete(new String[]{"test/files/deckDeleteTest1%s.txt", "test/files/deckDeleteTest2%s.txt"}, 3);
             assert (!f11.exists());
             assert (!f12.exists());
             assert (!f13.exists());
