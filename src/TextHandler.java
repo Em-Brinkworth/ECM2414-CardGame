@@ -40,7 +40,8 @@ public class TextHandler {
         // Deletes all players up to the player count
         for (int i =1; i <= playerCount; i++) {
             for (String j : fileBaseNames) {
-                new File(j + i + ".txt").delete();
+                String test = String.format(j,i);
+                new File(String.format(j,i)).delete();
             }
         }
     }
