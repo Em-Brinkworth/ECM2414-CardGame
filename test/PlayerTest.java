@@ -1,101 +1,102 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    @Test
-    void getId() {
-    }
+    Player testPlayer;
+    CardDeck testDeck;
 
-    @Test
-    void getName() {
-    }
-
-    @Test
-    void getFp() {
+    @BeforeEach
+    void beforeEach() {
+        testPlayer = new Player(new Card[]{
+                new Card(1),
+                new Card(2),
+                new Card(3),
+                new Card(4)
+        }, 1);
+        testDeck = new CardDeck(new Card[]{
+                new Card(1),
+                new Card(1),
+                new Card(1),
+                new Card(1)
+        },1);
     }
 
     @Test
     void getHandAsString() {
-    }
-
-    @Test
-    void getHand() {
+        assertEquals("1 2 3 4 ", testPlayer.getHandAsString());
     }
 
     @Test
     void checkIfWon() {
+        Player testPlayerWhoHasWon = new Player(new Card[]{
+                new Card(1),
+                new Card(1),
+                new Card(1),
+                new Card(1)
+        }, 1);
+        Player testPlayerWhoHasNotWon = new Player(new Card[]{
+                new Card(1),
+                new Card(1),
+                new Card(1),
+                new Card(2)
+        }, 2);
+        assert testPlayerWhoHasWon.checkIfWon();
+        assert !testPlayerWhoHasNotWon.checkIfWon();
     }
 
     @Test
     void draw() {
+        testPlayer.draw(testDeck);
+        assertEquals("1 2 3 4 1 ", testPlayer.getHandAsString());
+        assertEquals("1 1 1 ", testDeck.getDeckAsString());
+
+        CardDeck emptyTestDeck = new CardDeck(new Card[]{}, 2);
+        testPlayer.draw(emptyTestDeck);
+        assertEquals("1 2 3 4 1 ", testPlayer.getHandAsString());
     }
 
     @Test
     void discard() {
-
+        testPlayer.discard(testDeck);
+        assertEquals(3, testPlayer.getHand().size());
+        assertEquals(5, testDeck.getDeck().size());
     }
 
     @Test
-    void testGetId() {
-    }
-
-    @Test
-    void testGetName() {
-    }
-
-    @Test
-    void testGetFp() {
-    }
-
-    @Test
-    void testGetHandAsString() {
-    }
-
-    @Test
-    void testGetHand() {
-    }
-
-    @Test
-    void testCheckIfWon() {
-    }
-
-    @Test
-    void testDraw() {
-    }
-
-    @Test
-    void testDiscard() {
-    }
-
-    @Test
-    void getCardToDiscard() {
-        Card[] cardarray = new Card[4];
-        cardarray[0] = new Card(4);
-        cardarray[1] = new Card(1);
-        cardarray[2] = new Card(1);
-        cardarray[3] = new Card(1);
-        Player player = new Player(cardarray, 4);
-
-        Assertions.assertEquals(player.getCardToDiscard().getValue(), 1);
-        //Tests that even with multiple of the same card and one of the desired card the card being removed is still
-        //one of the non-desired kind
-
-
-        Card[] cardarray = new Card[4];
-        cardarray[0] = new Card(4);
-        cardarray[1] = new Card(3);
-        cardarray[2] = new Card(2);
-        cardarray[3] = new Card(1);
-        Player player2 = new Player(cardarray, 4);
-        //Test for everything being eventually discarded and preferred card not being discarded - how??
-        //1234 then for 1,2,3,4 each show that they are all, bar 4, eventually selected with refills.
-        //This is only a selector so enough to show that all are selected.
-
-
-
+    void maintainingFourCardsAfterEachDrawDiscard() {
 
     }
+
+//    @Test
+//    void getCardToDiscard() {
+//        Card[] cardarray = new Card[4];
+//        cardarray[0] = new Card(4);
+//        cardarray[1] = new Card(1);
+//        cardarray[2] = new Card(1);
+//        cardarray[3] = new Card(1);
+//        Player player = new Player(cardarray, 4);
+//
+//        Assertions.assertEquals(player.getCardToDiscard().getValue(), 1);
+//        //Tests that even with multiple of the same card and one of the desired card the card being removed is still
+//        //one of the non-desired kind
+//
+//
+//        Card[] cardarray = new Card[4];
+//        cardarray[0] = new Card(4);
+//        cardarray[1] = new Card(3);
+//        cardarray[2] = new Card(2);
+//        cardarray[3] = new Card(1);
+//        Player player2 = new Player(cardarray, 4);
+//        //Test for everything being eventually discarded and preferred card not being discarded - how??
+//        //1234 then for 1,2,3,4 each show that they are all, bar 4, eventually selected with refills.
+//        //This is only a selector so enough to show that all are selected.
+//
+//
+//
+//
+//    }
 }

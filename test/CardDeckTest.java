@@ -7,40 +7,40 @@ class CardDeckTest {
 
     @Test
     void draw() {
-
-        Card[] cardarray = new Card[4];
-        cardarray[0] = new Card(4);
-        cardarray[1] = new Card(7);
-        cardarray[2] = new Card(3);
-        cardarray[3] = new Card(6);
-        CardDeck testdeck = new CardDeck(cardarray, 1);
-        Card drawncard = testdeck.draw();
-        Assertions.assertEquals(testdeck.getDeckAsString(), "4 7 3 ");
-        Assertions.assertEquals(drawncard.getValue(), 6);
+        Card[] cardArray = new Card[4];
+        cardArray[0] = new Card(4);
+        cardArray[1] = new Card(7);
+        cardArray[2] = new Card(3);
+        cardArray[3] = new Card(6);
+        CardDeck testDeck = new CardDeck(cardArray, 1);
+        Card drawncard = testDeck.draw();
+        Assertions.assertEquals("4 7 3 ", testDeck.getDeckAsString());
+        Assertions.assertEquals(6, drawncard.getValue());
         //Checks last card drawn and remaining cards are correct
-
     }
 
     @Test
     void discardToDeck() {
-        Card[] cardarray = new Card[4];
-        cardarray[0] = new Card(4);
-        cardarray[1] = new Card(7);
-        cardarray[2] = new Card(3);
-        cardarray[3] = new Card(6);
-        CardDeck testdeck = new CardDeck(cardarray, 1);
+        Card[] cardArray = new Card[4];
+        cardArray[0] = new Card(4);
+        cardArray[1] = new Card(7);
+        cardArray[2] = new Card(3);
+        cardArray[3] = new Card(6);
+        CardDeck testDeck = new CardDeck(cardArray, 1);
         Card addedcard = new Card(8);
-        testdeck.discardToDeck(addedcard);
-        Assertions.assertEquals(testdeck.getDeckAsString(), "8 4 7 3 6 ");
+        testDeck.discardToDeck(addedcard);
+        Assertions.assertEquals("8 4 7 3 6 ", testDeck.getDeckAsString());
         //Check added card is discarded to top
-
-    }
-
-    @Test
-    void getDeckName() {
     }
 
     @Test
     void getDeckAsString() {
+        CardDeck testDeck = new CardDeck(new Card[]{
+                new Card(1),
+                new Card(2),
+                new Card(3),
+                new Card(4)
+        },1);
+        assertEquals("1 2 3 4 ", testDeck.getDeckAsString());
     }
 }
