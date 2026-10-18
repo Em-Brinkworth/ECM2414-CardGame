@@ -30,4 +30,8 @@ public class CardDeck {
         }
         return deckAsString.toString();
     }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
 }
