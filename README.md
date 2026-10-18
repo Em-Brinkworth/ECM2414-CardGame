@@ -147,6 +147,8 @@ Writes the message `text` to the file at location `fp`.
 Is `synchronized` to prevent collisions from multiple players trying to access the same file.  
 
 ### Delete
-`static void delete(int playerCount)`  
+`static void delete(String[] fileBaseNames, int playerCount)`  
+`String fileBaseNames` is the directory path and base name (excluding the player/deck number and ".txt")
 `int playerCount` is the number of players in the game.  
-Deletes the first n player logs, where n is the `playerCount`.  
+For each element of fileBaseNames, deletes the first n elements with the naming convention baseName + n + .txt
+Deletes the first n player logs, where n is the `playerCount`.
