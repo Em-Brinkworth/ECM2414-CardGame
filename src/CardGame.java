@@ -132,9 +132,5 @@ public class CardGame extends Thread{
                 }
             }
         }
-
-
-
-
     }
 }

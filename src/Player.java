@@ -73,19 +73,12 @@ public class Player {
     }
 
     public Card getCardToDiscard() {
-        ArrayList<Integer> positionsOfDiscardableCards = new ArrayList<>();
-        Card card;
-        for(int i = 0; i<hand.size();i++ ) {
-            if(hand.get(i).getValue()!= id){
-                positionsOfDiscardableCards.add(i);
+        // Discard the FIRST off suit card
+        for (Card card: hand) {
+            if (card.getValue() != id) {
+                return card;
             }
         }
-        Random randomiser = new Random();
-        try {
-            card = hand.get(positionsOfDiscardableCards.get(randomiser.nextInt(positionsOfDiscardableCards.size() - 1)));
-        } catch (IllegalArgumentException e) {
-            card = hand.get(randomiser.nextInt(hand.size()-1));
-        }
-        return card;
+        return hand.getLast();
     }
 }
