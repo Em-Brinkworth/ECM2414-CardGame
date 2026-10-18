@@ -36,12 +36,12 @@ public class TextHandler {
         }
     }
 
-    static void delete(int playerCount) {
+    static void delete(String[] fileBaseName, int playerCount) {
         // Deletes all players up to the player count
         for (int i =1; i <= playerCount; i++) {
-            File p = new File("Games/player" + i + ".txt");
-            File d = new File("Games/Deck" + i + "_output.txt");
-            p.delete(); d.delete();
+            for (String j : fileBaseName) {
+                new File(j + i + ".txt").delete();
+            }
         }
     }
 }

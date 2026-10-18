@@ -23,7 +23,7 @@ public class CardGame extends Thread{
                 System.out.println("That's not a valid integer. Please try again ");
             }
         }
-        TextHandler.delete(playerCount);
+        TextHandler.delete(new String[]{"Games/player", "Games/Deck"}, playerCount);
         // Input file
         int[] packContents;
         while(true){
